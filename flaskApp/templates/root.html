@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>root</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/root.css')}}"
+    />
+  </head>
+  <body>
+    <header>
+      <img
+        id="logo"
+        src="{{url_for('static', filename='assets/usthb-logo.png')}}"
+      />
+      <h1>Mini Projet</h1>
+      <img
+        id="logo"
+        src="{{url_for('static', filename='assets/usthb-logo.png')}}"
+      />
+    </header>
+    <main>
+      <div id="menu">
+        <h1 id="selected-menu-item">Menu</h1>
+        <a href="{{url_for('resume')}}" class="menu-item"
+          ><strong>Résumé</strong></a
+        >
+        <a href="{{url_for('chercher')}}" class="menu-item"
+          ><strong>Chercher</strong></a
+        >
+        <a href="{{url_for('details')}}" class="menu-item"
+          ><strong>Détails</strong></a
+        >
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>

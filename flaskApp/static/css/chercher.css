@@ -1,0 +1,91 @@
+header {
+  color: #ffefc1;
+}
+main {
+  padding: 10px;
+}
+main > p {
+  text-align: center;
+  color: #9dc4ff;
+}
+main > div {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+label {
+  color: #ffefc1;
+}
+input,
+select,
+option {
+  padding: 10px;
+  border: 0;
+  border-radius: 10px;
+  background-color: #ffefc1;
+  color: #0d6efd;
+  width: 90%;
+  margin: 10px;
+  margin-top: 10px;
+}
+select,
+option {
+  text-align: center;
+}
+label {
+  margin-left: 10px;
+}
+#nompre {
+  grid-column-start: 1;
+  grid-column-end: 6;
+  margin: 10px;
+}
+#sexe {
+  grid-column-start: 6;
+  grid-column-end: 8;
+  margin: 10px;
+}
+#spec {
+  grid-column-start: 8;
+  grid-column-end: 11;
+  margin: 10px;
+}
+#ann {
+  grid-column-start: 11;
+  grid-column-end: 13;
+  margin: 10px;
+}
+#submit-btn {
+  grid-column-start: 13;
+  grid-column-end: 15;
+  padding: 10px;
+  margin: 20px;
+  margin-top: 25px;
+  height: 50px;
+  border: 0;
+  border-radius: 10px;
+  background-color: #6ea8fe;
+  color: #031c3f;
+}
+#result-table {
+  background-color: #ffefc1;
+  border: 0.5px solid #ffe08373;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: none;
+  margin: 20px auto;
+}
+#result-table-header {
+  background-color: #ffe083;
+  color: #4a8bdfc3;
+}
+th,
+td {
+  padding: 10px 20px;
+}
+td {
+  color: #031c3f;
+}

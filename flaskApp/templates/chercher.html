@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Chercher</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/general.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/chercher.css')}}"
+    />
+  </head>
+  <body>
+    <header>
+      <h2>Chercher</h2>
+    </header>
+    <aside>
+      <img
+        id="logo"
+        src="{{url_for('static', filename='assets/usthb-logo.png')}}"
+      />
+      <div id="menu">
+        <a href="{{url_for('resume')}}" class="menu-item"
+          ><strong>Résumé</strong></a
+        >
+        <a href="{{url_for('resume')}}" class="menu-item partie">partie 1</a>
+        <a href="{{url_for('resume2')}}" class="menu-item partie">partie 2</a>
+        <a href="{{url_for('resume3')}}" class="menu-item partie">partie 3</a>
+        <div id="selected-menu-item" class="menu-item">
+          <strong>Chercher</strong>
+        </div>
+        <a href="{{url_for('details')}}" class="menu-item"
+          ><strong>Détails</strong></a
+        >
+      </div>
+    </aside>
+    <main>
+      <div>
+        <div id="nompre">
+          <label for="nom">Nom ou/et Prénom</label>
+          <input type="text" name="nompre" />
+        </div>
+        <div id="sexe">
+          <label for="sexe">Sexe</label>
+          <select name="sexe">
+            <option value="none"></option>
+            <option value="H">homme</option>
+            <option value="F">femelle</option>
+          </select>
+        </div>
+        <div id="spec">
+          <label for="specialite">Spécialité</label>
+          <select name="specialite">
+            <option value="none"></option>
+            <option value="SPECIALITE_1">SPECIALITE 1</option>
+            <option value="SPECIALITE_2">SPECIALITE 2</option>
+            <option value="SPECIALITE_3">SPECIALITE 3</option>
+            <option value="SPECIALITE_4">SPECIALITE 4</option>
+            <option value="SPECIALITE_5">SPECIALITE 5</option>
+            <option value="SPECIALITE_6">SPECIALITE 6</option>
+            <option value="SPECIALITE_7">SPECIALITE 7</option>
+          </select>
+        </div>
+        <div id="ann">
+          <label for="annee">Année</label>
+          <select name="annee">
+            <option value="none"></option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+          </select>
+        </div>
+        <button id="submit-btn" onclick="rechercher()">Rechercher</button>
+      </div>
+    </main>
+    <footer></footer>
+    <script src="{{url_for('static', filename='js/chercher.js')}}"></script>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+body {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 65px 1fr 10px;
+  grid-template-areas:
+    "aside header"
+    "aside main"
+    "aside footer";
+  height: 100vh;
+  color: rgb(255, 255, 255);
+  font-family: Arial, sans-serif;
+  background-color: #0a52be;
+}
+header {
+  grid-area: header;
+  background-color: #0d6efd;
+  display: flex;
+  justify-content: space-between;
+}
+h2,
+h3 {
+  margin: 15px;
+}
+aside {
+  grid-area: aside;
+  background-color: #0a52be;
+}
+#logo {
+  height: 60px;
+  margin-left: 60px;
+  margin-bottom: 1px;
+}
+#menu {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.menu-item {
+  padding: 10px;
+  transition: background-color ease 0.3s;
+  color: #ffc107;
+  text-decoration: none;
+}
+.menu-item:hover {
+  background-color: #0d6efd;
+}
+.partie {
+  font-size: 17px;
+  padding: 5px;
+  color: #ffc107cc;
+}
+#selected-menu-item {
+  background-color: #0d6efd;
+  color: #ffffff;
+}
+main {
+  grid-area: main;
+  background-color: #031c3f;
+}
+canvas {
+  margin: auto;
+}
+footer {
+  grid-area: footer;
+  background-color: #0d6efd;
+}
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #031c3f;
+  border-radius: 20px;
+  border: 3px solid #0a52be;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Résumé</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/general.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/resume2.css') }}"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <h2>Résumé</h2>
+      <button id="refresh-btn" onclick="updateCharts()">
+        <strong>Actualiser</strong>
+      </button>
+    </header>
+    <aside>
+      <img
+        id="logo"
+        src="{{url_for('static', filename='assets/usthb-logo.png')}}"
+      />
+      <div id="menu">
+        <div id="selected-menu-item" class="menu-item">
+          <strong>Résumé</strong>
+        </div>
+        <a href="{{url_for('resume')}}" class="menu-item partie">partie 1</a>
+        <div id="selected-menu-item" class="menu-item partie">partie 2</div>
+        <a href="{{url_for('resume3')}}" class="menu-item partie">partie 3</a>
+        <a href="{{url_for('chercher')}}" class="menu-item"
+          ><strong>Chercher</strong></a
+        >
+        <a href="{{url_for('details')}}" class="menu-item"
+          ><strong>Détails</strong></a
+        >
+      </div>
+    </aside>
+    <main>
+      <div id="cards-area" class="card">
+        <div class="card-header">
+          <strong>la moyenne des notes des etudients selon les années</strong>
+        </div>
+        <div class="card-body"></div>
+      </div>
+      <div id="pie-area" class="card">
+        <div class="card-header">
+          <strong>la moy des notes des etudients selon les spécialites</strong>
+        </div>
+        <div class="card-body">
+          <canvas id="pie-chart" width="200" height="75"></canvas>
+        </div>
+      </div>
+      <div id="radar-area" class="card">
+        <div class="card-header">
+          <strong
+            >le nombre des etudient des spécialites selon les année</strong
+          >
+        </div>
+        <div class="card-body">
+          <canvas id="radar-chart" width="100" height="55"></canvas>
+        </div>
+      </div>
+      <div id="mixed-area" class="card">
+        <div class="card-header">
+          <strong>La moy des notes des hommes vs femmes par année</strong>
+        </div>
+        <div class="card-body">
+          <canvas id="mixed-chart" width="200" height="82"></canvas>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+    <script src="{{url_for('static', filename='js/resume2.js')}}"></script>
+  </body>
+</html>

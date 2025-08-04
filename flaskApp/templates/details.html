@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Détails</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/general.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/details.css')}}"
+    />
+  </head>
+  <body>
+    <header>
+      <h2>Détails</h2>
+    </header>
+    <aside>
+      <img
+        id="logo"
+        src="{{url_for('static', filename='assets/usthb-logo.png')}}"
+      />
+      <div id="menu">
+        <a href="{{url_for('resume')}}" class="menu-item"
+          ><strong>Résumé</strong></a
+        >
+        <a href="{{url_for('resume')}}" class="menu-item partie">partie 1</a>
+        <a href="{{url_for('resume2')}}" class="menu-item partie">partie 2</a>
+        <a href="{{url_for('resume3')}}" class="menu-item partie">partie 3</a>
+        <a href="{{url_for('chercher')}}" class="menu-item"
+          ><strong>Chercher</strong></a
+        >
+        <div id="selected-menu-item" class="menu-item">
+          <strong>Détails</strong>
+        </div>
+      </div>
+    </aside>
+    <main>
+      <h2>Les pages de résumé:</h2>
+      <h3>La première partie:</h3>
+      <div class="explination-div">
+        <img src="{{url_for('static', filename='assets/1-1.png')}}" alt="" />
+        <p>
+          Ce graphique permet à l'utilisateur de comparer le nombre d'hommes et
+          de femmes au fil des années, en mettant en évidence les différences de
+          genre dans les tendances d'inscription.
+        </p>
+        <img src="{{url_for('static', filename='assets/1-2.png')}}" alt="" />
+        <p>
+          Ce graphique en secteurs permet à l'utilisateur de voir la répartition
+          des étudiants par spécialité, offrant une vue d'ensemble des
+          préférences académiques.
+        </p>
+        <img src="{{url_for('static', filename='assets/1-3.png')}}" alt="" />
+        <p>
+          Ce graphique linéaire permet à l'utilisateur de suivre l'évolution du
+          nombre d'étudiants dans trois spécialités au fil des années,
+          facilitant l'identification des tendances de popularité.
+        </p>
+        <img src="{{url_for('static', filename='assets/1-4.png')}}" alt="" />
+        <p>
+          Ce graphique à barres permet à l'utilisateur de visualiser l'évolution
+          du nombre d'étudiants chaque année, offrant ainsi une perspective sur
+          les tendances d'inscription au fil du temps.
+        </p>
+      </div>
+      <h3>La deuxiéme partie:</h3>
+      <div class="explination-div">
+        <img src="{{url_for('static', filename='assets/2-2.png')}}" alt="" />
+        <p>
+          Ce graphique en secteurs permet à l'utilisateur de visualiser la
+          répartition des moyennes des étudiants selon les spécialités, offrant
+          ainsi une vue d'ensemble de la performance académique par domaine.
+        </p>
+        <img src="{{url_for('static', filename='assets/2-3.png')}}" alt="" />
+        <p>
+          Ce graphique en radar permet à l'utilisateur de comparer le nombre
+          d'étudiants dans chaque spécialité au fil des années, facilitant
+          l'identification des changements de popularité des spécialités sur
+          plusieurs années.
+        </p>
+        <img src="{{url_for('static', filename='assets/2-4.png')}}" alt="" />
+        <p>
+          Ce graphique mixte permet à l'utilisateur de visualiser et comparer
+          l'évolution des performances moyennes des hommes et des femmes par
+          année, facilitant ainsi l'analyse des tendances de réussite selon le
+          sexe.
+        </p>
+        <img src="{{url_for('static', filename='assets/2-1.png')}}" alt="" />
+        <p>
+          Ces cartes permettent à l'utilisateur de consulter rapidement la
+          moyenne des notes par année, facilitant ainsi la comparaison des
+          performances académiques d'une année à l'autre.
+        </p>
+      </div>
+      <h3>La troisiéme partie:</h3>
+      <div class="explination-div">
+        <img src="{{url_for('static', filename='assets/3.png')}}" alt="" />
+        <p>
+          Ce graphique à barres groupées présente les données relatives aux
+          spécialités. Pour chaque spécialité, la barre de gauche indique le
+          nombre d'élèves inscrits, tandis que la barre de droite montre le
+          nombre d'élèves admis dans cette spécialité. Cette comparaison permet
+          d'analyser l'admission des étudiants en fonction de leur spécialité.
+        </p>
+      </div>
+      <div id="btn-explination-div" class="explination-div">
+        <img
+          src="{{url_for('static', filename='assets/refreash.png')}}"
+          alt=""
+        />
+        <p>
+          à tout moment, dans les 3 partie, l'utilisateur peut rafraîchir et
+          reconstruire les graphiques pour s'adapter à l'état actuel de la base
+          de données
+        </p>
+      </div>
+      <h2>La page de recherche:</h2>
+      <div id="explination-div-3">
+        <img src="{{url_for('static', filename='assets/4-1.png')}}" alt="" />
+        <p>
+          Cette page de recherche permet à l'utilisateur de filtrer les
+          étudiants selon leur nom, spécialité, année ou sexe. Chaque filtre est
+          optionnel, offrant ainsi une grande flexibilité dans les recherches.
+          <br />
+          pour la recherche par nom, l'utilisateur peut entrer le prénom, le nom
+          de famille, ou les deux, voire plusieurs noms.
+          <br />
+          <strong>Attention :</strong> si le nom saisi est incomplet
+          (l'utilisateur entre un nom partiel), cela pourrait entraîner un
+          tableau vide.
+        </p>
+        <span> voici un exemple d'utilisation : </span>
+        <img src="{{url_for('static', filename='assets/4-2.png')}}" alt="" />
+      </div>
+    </main>
+    <footer>
+      <strong>
+        contactez-moi si quelque chose n'est pas clair sur
+        mariabenmohamed01@gmail.com
+      </strong>
+    </footer>
+  </body>
+</html>
