@@ -1,16 +1,32 @@
 from flask import Flask, render_template, request, jsonify
-from flaskext.mysql import MySQL
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
-mysql = MySQL()
 
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_PORT'] = 3306
-app.config['MYSQL_DATABASE_PASSWORD'] = 'mimi2004.'
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_DB'] = 'db_university'
+DB_CONFIG = {
+    "host": "aws-0-eu-north-1.pooler.supabase.com",
+    "port": "5432",
+    "database": "postgres",
+    "user": "postgres.wtfcaacrrcjzhhtnphlf",
+    "password": "mimi2004."
+}
 
-mysql.init_app(app)
+def get_db_connection():
+    return psycopg2.connect(**DB_CONFIG)
+
+@app.route("/api/resultats", methods=["GET"])
+def get_resultats():
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT * FROM resultats;")
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+        return jsonify(rows)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/')
 def root():
@@ -29,64 +45,97 @@ def resume3():
     return render_template('resume3.html')
 
 @app.route('/api/annee_sexe_moy')
-def getAnnenSexeMoy():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute("select annee, avg(moyenne) as moy from resultats group by sexe, annee;")
-    data = cursor.fetchall()
-    row_headers = [x[0] for x in cursor.description]
-    cursor.close()
-    json_annee_sexe_moy=[]
-    for result in data:
-        json_annee_sexe_moy.append(dict(zip(row_headers, result)))
-    return jsonify(json_annee_sexe_moy)
+def get_annee_sexe_moy():
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT annee, sexe, AVG(moyenne) AS moy 
+            FROM resultats 
+            GROUP BY sexe, annee
+            ORDER BY annee, sexe;
+        """)
+        data = cur.fetchall()
+        row_headers = [desc[0] for desc in cur.description]
+        cur.close()
+        conn.close()
+        json_annee_sexe_moy = [dict(zip(row_headers, row)) for row in data]
+        return jsonify(json_annee_sexe_moy)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route('/api/annee_etudient')
-def getAnnenEtudient():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute("select annee, count(matricule) as nombre from resultats group by annee;")
-    data = cursor.fetchall()
-    row_headers = [x[0] for x in cursor.description]
-    cursor.close()
-    json_annee_etudient=[]
-    for result in data:
-        json_annee_etudient.append(dict(zip(row_headers, result)))
-    return jsonify(json_annee_etudient)
+def get_annee_etudient():
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT annee, COUNT(matricule) AS nombre 
+            FROM resultats 
+            GROUP BY annee
+            ORDER BY annee;
+        """)
+        data = cur.fetchall()
+        row_headers = [desc[0] for desc in cur.description]
+        cur.close()
+        conn.close()
+        json_annee_etudient = [dict(zip(row_headers, row)) for row in data]
+        return jsonify(json_annee_etudient)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route('/api/annee_spec_etudient3')
-def getAnnenSpecEtudient3():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute("select annee, count(matricule) as nombre from resultats where specialite='SPECIALITE_1' or specialite='SPECIALITE_2' or specialite='SPECIALITE_3' group by specialite, annee;")
-    data = cursor.fetchall()
-    row_headers = [x[0] for x in cursor.description]
-    cursor.close()
-    json_annee_spec_etudient3=[]
-    for result in data:
-        json_annee_spec_etudient3.append(dict(zip(row_headers, result)))
-    return jsonify(json_annee_spec_etudient3)
+def get_annee_spec_etudient3():
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT annee, COUNT(matricule) AS nombre 
+            FROM resultats 
+            WHERE specialite IN ('SPECIALITE_1', 'SPECIALITE_2', 'SPECIALITE_3') 
+            GROUP BY specialite, annee
+            ORDER BY annee;
+        """)
+        data = cur.fetchall()
+        row_headers = [desc[0] for desc in cur.description]
+        cur.close()
+        conn.close()
+        json_annee_spec_etudient3 = [dict(zip(row_headers, row)) for row in data]
+        return jsonify(json_annee_spec_etudient3)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route('/api/spec_etudient')
-def getSpecEtudient2021():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute("select specialite, count(*) as nombre from resultats group by specialite;")
-    data = cursor.fetchall()
-    row_headers = [x[0] for x in cursor.description]
-    cursor.close()
-    json_spec_etudient=[]
-    for result in data:
-        json_spec_etudient.append(dict(zip(row_headers, result)))
-    return jsonify(json_spec_etudient)
+def get_spec_etudient():
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT specialite, COUNT(*) AS nombre 
+            FROM resultats 
+            GROUP BY specialite
+            ORDER BY specialite;
+        """)
+        data = cur.fetchall()
+        row_headers = [desc[0] for desc in cur.description]
+        cur.close()
+        conn.close()
+        json_spec_etudient = [dict(zip(row_headers, row)) for row in data]
+        return jsonify(json_spec_etudient)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route('/api/moy_annee')
 def getMoyAnne():
-    conn = mysql.connect()
+    conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("select annee, avg(moyenne) as avgMoyAnnee from resultats group by annee;")
+    cursor.execute("""select annee, avg(moyenne) as avgMoyAnnee from resultats group by annee;""")
     data = cursor.fetchall()
-    row_headers = [x[0] for x in cursor.description]
+    row_headers = [desc[0] for desc in cursor.description]
     cursor.close()
     json_moy_annee=[]
     for result in data:
@@ -95,11 +144,11 @@ def getMoyAnne():
 
 @app.route('/api/moy_spec')
 def getMoySpec():
-    conn = mysql.connect()
+    conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("select specialite, avg(moyenne) as avgMoySpec from resultats group by specialite;")
+    cursor.execute("""select specialite, avg(moyenne) as avgMoySpec from resultats group by specialite;""")
     data = cursor.fetchall()
-    row_headers = [x[0] for x in cursor.description]
+    row_headers = [desc[0] for desc in cursor.description]
     cursor.close()
     json_moy_spec=[]
     for result in data:
@@ -108,11 +157,11 @@ def getMoySpec():
 
 @app.route('/api/annee_spec_etudient')
 def getAnnenSpecEtudient():
-    conn = mysql.connect()
+    conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("select specialite, annee, count(matricule) as nombre from resultats group by specialite, annee order by annee, specialite;")
+    cursor.execute("""select specialite, annee, count(matricule) as nombre from resultats group by specialite, annee order by annee, specialite;""")
     data = cursor.fetchall()
-    row_headers = [x[0] for x in cursor.description]
+    row_headers = [desc[0] for desc in cursor.description]
     cursor.close()
     json_annee_spec_etudient=[]
     for result in data:
@@ -121,9 +170,9 @@ def getAnnenSpecEtudient():
 
 @app.route('/api/annee_sexe_etudient')
 def getAnnenSexeEtudient():
-    conn = mysql.connect()
+    conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("select annee, count(matricule) as nombre from resultats group by sexe, annee;")
+    cursor.execute("""select annee, count(matricule) as nombre from resultats group by sexe, annee;""")
     data = cursor.fetchall()
     row_headers = [x[0] for x in cursor.description]
     cursor.close()
@@ -134,9 +183,9 @@ def getAnnenSexeEtudient():
 
 @app.route('/api/etudient_Spec_2021')
 def getEtudientSpec2021():
-    conn = mysql.connect()
+    conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("select count(matricule) as nombre from resultats where annee=2021 group by specialite order by specialite;")
+    cursor.execute("""select count(matricule) as nombre from resultats where annee=2021 group by specialite order by specialite;""")
     data = cursor.fetchall()
     row_headers = [x[0] for x in cursor.description]
     cursor.close()
@@ -147,9 +196,9 @@ def getEtudientSpec2021():
 
 @app.route('/api/etudient_admis_Spec_2021')
 def getEtudientAdmisSpec2021():
-    conn = mysql.connect()
+    conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("select specialite, count(matricule) as nombre from resultats where moyenne>=10 and annee=2021 group by specialite order by specialite;")
+    cursor.execute("""select specialite, count(matricule) as nombre from resultats where moyenne>=10 and annee=2021 group by specialite order by specialite;""")
     data = cursor.fetchall()
     row_headers = [x[0] for x in cursor.description]
     cursor.close()
@@ -164,45 +213,54 @@ def chercher():
 
 @app.route('/api/etudients_recherchees', methods=['GET'])
 def rechercher():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    nompre = request.args.get('nompre', "").strip()
-    sexe = request.args.get('sexe', "none")
-    specialite = request.args.get('specialite', "none")
-    annee = request.args.get('annee', "none")
-    if nompre:
-        mySqlQuery = """
-            SELECT *, MATCH(nom, prenom) AGAINST (%s IN NATURAL LANGUAGE MODE) AS relevance
-            FROM resultats
-        """
-    else:
-        mySqlQuery = "SELECT * FROM resultats"
-    conditions = []
-    parameters = []
-    if nompre:
-        conditions.append("MATCH(nom, prenom) AGAINST (%s IN NATURAL LANGUAGE MODE)")
-        parameters.append(nompre)
-        parameters.append(nompre)
-    if sexe != "none":
-        conditions.append("sexe = %s")
-        parameters.append(sexe)
-    if specialite != "none":
-        conditions.append("specialite = %s")
-        parameters.append(specialite)
-    if annee != "none":
-        conditions.append("annee = %s")
-        parameters.append(annee)
-    if conditions:
-        mySqlQuery += " WHERE " + " AND ".join(conditions)
-    mySqlQuery += ";"
-    cursor.execute(mySqlQuery, tuple(parameters))
-    data = cursor.fetchall()
-    row_headers = [x[0] for x in cursor.description]
-    cursor.close()
-    json_etudients_recherchees=[]
-    for result in data:
-        json_etudients_recherchees.append(dict(zip(row_headers, result)))
-    return jsonify(json_etudients_recherchees)
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        nompre = request.args.get('nompre', "").strip()
+        sexe = request.args.get('sexe', "none")
+        specialite = request.args.get('specialite', "none")
+        annee = request.args.get('annee', "none")
+
+        base_query = "SELECT * FROM resultats"
+        conditions = []
+        parameters = []
+
+        if nompre:
+            keywords = nompre.split()
+            name_conditions = []
+            for word in keywords:
+                name_conditions.append("(nom ILIKE %s OR prenom ILIKE %s)")
+                parameters.extend([f"%{word}%", f"%{word}%"])
+            conditions.append("(" + " OR ".join(name_conditions) + ")")
+
+        if sexe != "none":
+            conditions.append("sexe = %s")
+            parameters.append(sexe)
+        if specialite != "none":
+            conditions.append("specialite = %s")
+            parameters.append(specialite)
+        if annee != "none":
+            conditions.append("annee = %s")
+            parameters.append(annee)
+
+        if conditions:
+            base_query += " WHERE " + " AND ".join(conditions)
+
+        base_query += ";"
+
+        cursor.execute(base_query, tuple(parameters))
+        data = cursor.fetchall()
+        row_headers = [x[0] for x in cursor.description]
+        cursor.close()
+        conn.close()
+
+        json_result = [dict(zip(row_headers, row)) for row in data]
+        return jsonify(json_result)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route('/details')
 def details():

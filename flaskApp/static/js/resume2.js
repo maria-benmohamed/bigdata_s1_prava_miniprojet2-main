@@ -15,6 +15,7 @@ function updateCharts() {
   httpRequest1.open("GET", "/api/moy_annee");
   httpRequest1.onreadystatechange = function () {
     if (httpRequest1.readyState === 4 && httpRequest1.status === 200) {
+      console.log(httpRequest1.response);
       jsonMoyAnnee = JSON.parse(httpRequest1.response);
       updateCards(jsonMoyAnnee);
     }
@@ -25,6 +26,7 @@ function updateCharts() {
   httpRequest2.open("GET", "/api/moy_spec");
   httpRequest2.onreadystatechange = function () {
     if (httpRequest2.readyState === 4 && httpRequest2.status === 200) {
+      console.log(httpRequest2.response);
       jsonMoySpec = JSON.parse(httpRequest2.response);
       updatePieChart(jsonMoySpec);
     }
@@ -65,7 +67,7 @@ function updateCards(jsonMoyAnnee) {
     return e.annee;
   });
   myData = jsonMoyAnnee.map(function (e) {
-    return e.avgMoyAnnee.toFixed(2);
+    return e.avgmoyannee.toFixed(2);
   });
   for (let i = 0; i < myLabels.length; i++) {
     card = document.createElement("div");
@@ -79,7 +81,7 @@ function updatePieChart(jsonSpecEtudient2021) {
     return e.specialite;
   });
   myData = jsonSpecEtudient2021.map(function (e) {
-    return e.avgMoySpec;
+    return e.avgmoyspec;
   });
   new Chart(document.getElementById("pie-chart"), {
     type: "pie",
