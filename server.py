@@ -6,19 +6,21 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 DB_CONFIG = {
-    "host": "aws-0-eu-north-1.pooler.supabase.com",
-    "port": "5432",
-    "database": "postgres",
-    "user": "postgres.wtfcaacrrcjzhhtnphlf",
-    "password": "mimi2004."
+    "host": os.environ.get("DB_HOST"),
+    "port": os.environ.get("DB_PORT"),
+    "database": os.environ.get("DB_NAME"),
+    "user": os.environ.get("DB_USER"),
+    "password": os.environ.get("DB_PASSWORD")
 }
 
+# def get_db_connection():
+#     conn = psycopg2.connect(
+#         dsn=os.environ.get("postgresql://postgres.wtfcaacrrcjzhhtnphlf:mimi2004.@aws-0-eu-north-1.pooler.supabase.com:5432/postgres"),
+#         cursor_factory=RealDictCursor
+#     )
+#     return conn
 def get_db_connection():
-    conn = psycopg2.connect(
-        dsn=os.environ.get("postgresql://postgres.wtfcaacrrcjzhhtnphlf:mimi2004.@aws-0-eu-north-1.pooler.supabase.com:5432/postgres"),
-        cursor_factory=RealDictCursor
-    )
-    return conn
+    return psycopg2.connect(**DB_CONFIG)
 
 @app.route("/api/resultats", methods=["GET"])
 def get_resultats():
