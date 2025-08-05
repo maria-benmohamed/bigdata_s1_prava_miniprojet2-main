@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: flask-postgres-app
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
+    envVars:
+      - key: DATABASE_URL
+        value: your_supabase_postgres_url_here
