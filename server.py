@@ -13,6 +13,9 @@ DB_CONFIG = {
     "password": os.environ.get("DB_PASSWORD")
 }
 
+print("DB CONFIG:", DB_CONFIG)
+print("DB CONFIG:", DB_USER)
+
 # def get_db_connection():
 #     conn = psycopg2.connect(
 #         dsn=os.environ.get("postgresql://postgres.wtfcaacrrcjzhhtnphlf:mimi2004.@aws-0-eu-north-1.pooler.supabase.com:5432/postgres"),
