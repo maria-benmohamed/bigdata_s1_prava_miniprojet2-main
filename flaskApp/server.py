@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, jsonify
+import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
@@ -13,7 +14,11 @@ DB_CONFIG = {
 }
 
 def get_db_connection():
-    return psycopg2.connect(**DB_CONFIG)
+    conn = psycopg2.connect(
+        dsn=os.environ.get("postgresql://postgres.wtfcaacrrcjzhhtnphlf:mimi2004.@aws-0-eu-north-1.pooler.supabase.com:5432/postgres"),
+        cursor_factory=RealDictCursor
+    )
+    return conn
 
 @app.route("/api/resultats", methods=["GET"])
 def get_resultats():
@@ -267,4 +272,4 @@ def details():
     return render_template('details.html')
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=False, host="0.0.0.0")
