@@ -14,7 +14,6 @@ DB_CONFIG = {
 }
 
 print("DB CONFIG:", DB_CONFIG)
-print("DB CONFIG:", DB_USER)
 
 # def get_db_connection():
 #     conn = psycopg2.connect(
